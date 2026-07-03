@@ -1,21 +1,12 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher
+from bot import dp, bot
 
-from config import settings
+logging.basicConfig(level=logging.INFO)
 
 
 async def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    )
-
-    bot = Bot(token=settings.bot_token)
-    dp = Dispatcher()
-
-    logging.info("Starting bot...")
     await dp.start_polling(bot)
 
 

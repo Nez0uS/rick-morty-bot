@@ -1,19 +1,8 @@
-from pydantic_settings import BaseSettings
+import os
+from dotenv import load_dotenv
 
 
-class Settings(BaseSettings):
-    # Telegram
-    bot_token: str
-
-    # Rick and Morty API
-    api_base_url: str = "https://rickandmortyapi.com/api"
-
-    # Database
-    db_url: str = "sqlite+aiosqlite:///./rick_morty.db"
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-
-
-settings = Settings()
+class Config:
+    def __init__(self):
+        load_dotenv()
+        self.bot_token = os.getenv("BOT_TOKEN")
