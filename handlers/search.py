@@ -2,6 +2,7 @@ from aiogram import Router
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
+from keyboards.main_menu import back_to_menu
 
 from services.rick_morty_api import RickMortyAPI
 
@@ -28,12 +29,9 @@ async def search_result(message: Message, state: FSMContext):
         await message.answer("Персонаж не найден 😔")
         return
 
-    # 1. Создай пустую строку
     text = f"Найдено: {len(results)}\n\n"
 
-    # 2. Пройдись по results циклом
     for i, character in enumerate(results[:10], start=1):
-        # 3. Добавь к text строчку с номером, именем и статусом
         text += f"{i}: {character['name']} - {character['status']}\n"
 
-    await message.answer(text)
+    await message.answer(text, reply_markup=back_to_menu())

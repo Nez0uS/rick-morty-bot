@@ -8,3 +8,10 @@ def main_menu() -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text="📋 По статусу", callback_data="categories")],
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+def back_to_menu() -> InlineKeyboardMarkup:
+    buttons = [
+        [InlineKeyboardButton(text="Главное меню", callback_data="main_menu")]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=buttons)

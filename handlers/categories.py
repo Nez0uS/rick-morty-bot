@@ -1,17 +1,25 @@
 from aiogram import Router
 from aiogram.types import CallbackQuery
+from keyboards.categories import categories_menu
 from keyboards.main_menu import back_to_menu
 
 from services.rick_morty_api import RickMortyAPI
 
-router = Router()
 api = RickMortyAPI()
+router = Router()
 
-
-@router.callback_query(lambda c: c.data == "random")
-async def random_character(callback: CallbackQuery):
+@router.callback_query(lambda c: c.data == "categories")
+async def show_categories(callback: CallbackQuery):
     await callback.answer()
-    character = await api.get_random_character()
+    await callback.message.answer("Выбери статус:", reply_markup=categories_menu())
+
+
+@router.callback_query(lambda c: c.data.startswith("status:"))
+async def show_by_status(callback: CallbackQuery):
+    await callback.answer()
+    status = callback.data.split(":")[1]
+    results = await api.get_by_status(status)
+    character = results[0]
     text = (
         f"<b>{character['name']}</b>\n\n"
         f"Статус: {character['status']}\n"
